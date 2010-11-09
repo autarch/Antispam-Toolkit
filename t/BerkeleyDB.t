@@ -66,4 +66,14 @@ my $file = $dir->file('listed_email_7.db');
     );
 }
 
+{
+    my $sfsdb = Antispam::Toolkit::BerkeleyDB->new( database => $file );
+
+    like(
+        $sfsdb->name(),
+        qr/^listed_email_7\.db - \d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d$/,
+        'default name includes file basename and last mod time'
+    );
+}
+
 done_testing();

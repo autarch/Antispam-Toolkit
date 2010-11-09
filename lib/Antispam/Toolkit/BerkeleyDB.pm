@@ -7,6 +7,7 @@ use namespace::autoclean;
 
 use Antispam::Toolkit::Types qw( File NonEmptyStr DataFile );
 use BerkeleyDB;
+use DateTime;
 
 use Moose;
 use MooseX::Params::Validate qw( validated_list );
@@ -25,7 +26,7 @@ has name => (
     is      => 'ro',
     isa     => NonEmptyStr,
     lazy    => 1,
-    default => sub { $_[0]->database() },
+    builder => '_build_name',
 );
 
 has _db => (
@@ -55,6 +56,17 @@ sub _build_db {
         -Filename => $self->database(),
         -Env      => $env,
     );
+}
+
+sub _build_name {
+    my $self = shift;
+
+    my $db_file = $self->database();
+
+    return
+        $db_file->basename() . ' - '
+        . DateTime->from_epoch( epoch => $db_file->stat()->mtime() )
+        ->iso8601();
 }
 
 sub build {
