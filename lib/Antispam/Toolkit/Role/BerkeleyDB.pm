@@ -91,10 +91,14 @@ sub build {
 
     my $lock = $db->cds_lock();
 
-    $db->truncate( my $count );
+    $db->truncate( my $count )
+        and die
+        "Fatal error trying to write to the BerkeleyDB file at $database";
 
     $class->_extract_data_from_file( $file, $db );
 
+    # This seems to return a true value even if there's not a real error
+    # (maybe in the case where it doesn't actually comptact?)
     $db->compact();
 
     $lock->cds_unlock();
@@ -120,9 +124,8 @@ sub match_value {
     my $key  = shift;
 
     my $value;
-    $self->_db()->db_get( $key, $value )
-        and die "Fatal error trying to read from the BerkeleyDB file at "
-        . $self->database();
+    # The return value here indicates whether or not the key exists.
+    $self->_db()->db_get( $key, $value );
 
     return $value;
 }
