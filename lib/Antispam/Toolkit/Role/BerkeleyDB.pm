@@ -120,7 +120,9 @@ sub match_value {
     my $key  = shift;
 
     my $value;
-    $self->_db()->db_get( $key, $value );
+    $self->_db()->db_get( $key, $value )
+        and die "Fatal error trying to read from the BerkeleyDB file at "
+        . $self->database();
 
     return $value;
 }
