@@ -1,4 +1,4 @@
-package Antispam::Toolkit::BerkeleyDB;
+package Antispam::Toolkit::Role::BerkeleyDB;
 
 use strict;
 use warnings;
@@ -9,9 +9,8 @@ use Antispam::Toolkit::Types qw( File NonEmptyStr DataFile );
 use BerkeleyDB;
 use DateTime;
 
-use Moose;
+use Moose::Role;
 use MooseX::Params::Validate qw( validated_list );
-use MooseX::StrictConstructor;
 
 with 'Antispam::Toolkit::Role::Database';
 
@@ -37,15 +36,11 @@ has _db => (
     builder  => '_build_db',
 );
 
-sub BUILD {
+sub _build_db {
     my $self = shift;
 
     die "The database file must already exist"
         unless -f $self->database();
-}
-
-sub _build_db {
-    my $self = shift;
 
     my $env = BerkeleyDB::Env->new(
         -Home  => $self->database()->dir(),
@@ -116,7 +111,7 @@ sub _extract_data_from_file {
 
     while (<$fh>) {
         chomp;
-        $db->db_put( $_ => 1 );
+        $class->_store_value( $db, $_ );
     }
 }
 
@@ -129,7 +124,5 @@ sub contains_value {
 
     return $value;
 }
-
-__PACKAGE__->meta()->make_immutable();
 
 1;

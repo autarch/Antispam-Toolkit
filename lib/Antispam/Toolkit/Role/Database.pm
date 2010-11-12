@@ -6,7 +6,7 @@ use namespace::autoclean;
 
 use Moose::Role;
 
-requires 'contains_value';
+requires qw( contains_value _store_value );
 
 1;
 

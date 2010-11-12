@@ -10,6 +10,8 @@ use List::AllUtils qw( first );
 use Moose::Role;
 use MooseX::Params::Validate qw( validated_hash );
 
+requires qw( check_content _build_accepted_content_types );
+
 has _accepted_content_types => (
     is       => 'bare',
     isa      => ArrayRef [NonEmptyStr],
@@ -17,8 +19,6 @@ has _accepted_content_types => (
     lazy     => 1,
     builder  => '_build_accepted_content_types',
 );
-
-requires qw( check_content _build_accepted_content_types );
 
 around check_content => sub {
     my $orig = shift;

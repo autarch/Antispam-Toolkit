@@ -7,14 +7,34 @@ use Path::Class qw( dir file );
 
 use Test::More 0.88;
 
-use Antispam::Toolkit::BerkeleyDB;
-
 my $dir = dir( tempdir( CLEANUP => 1 ) );
 
 my $file = $dir->file('listed_email_7.db');
 
 {
-    Antispam::Toolkit::BerkeleyDB->build(
+
+    package MyBDB;
+
+    use Moose;
+    use MooseX::StrictConstructor;
+
+    with 'Antispam::Toolkit::Role::BerkeleyDB';
+
+    sub _store_value {
+        my $self  = shift;
+        my $db    = shift;
+        my $value = shift;
+
+        $db->db_put( $value => 1 );
+
+        return;
+    }
+
+    sub check_value { }
+}
+
+{
+    MyBDB->build(
         database => $file,
         file     => file( 't', 'data', 'listed_email_7.txt' ),
     );
@@ -48,7 +68,7 @@ my $file = $dir->file('listed_email_7.db');
 }
 
 {
-    my $sfsdb = Antispam::Toolkit::BerkeleyDB->new(
+    my $sfsdb = MyBDB->new(
         database => $file,
         name     => 'listed email 7',
     );
@@ -67,7 +87,7 @@ my $file = $dir->file('listed_email_7.db');
 }
 
 {
-    my $sfsdb = Antispam::Toolkit::BerkeleyDB->new( database => $file );
+    my $sfsdb = MyBDB->new( database => $file );
 
     like(
         $sfsdb->name(),
