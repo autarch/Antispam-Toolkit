@@ -66,29 +66,29 @@ my $file = $dir->file('listed_email_7.db');
 }
 
 {
-    my $sfsdb = MyBDB->new(
+    my $mydb = MyBDB->new(
         database => $file,
         name     => 'listed email 7',
     );
 
     for my $email (qw( foo@example.com bar@example.com )) {
         ok(
-            $sfsdb->match_value($email),
+            $mydb->match_value($email),
             "Berkeley DB file contains $email (match_value method)"
         );
     }
 
     ok(
-        !$sfsdb->match_value('autarch@urth.org'),
+        !$mydb->match_value('autarch@urth.org'),
         'Berkeley DB file does not contain autarch@urth.org (match_value method)'
     );
 }
 
 {
-    my $sfsdb = MyBDB->new( database => $file );
+    my $mydb = MyBDB->new( database => $file );
 
     like(
-        $sfsdb->name(),
+        $mydb->name(),
         qr/^listed_email_7\.db - \d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d$/,
         'default name includes file basename and last mod time'
     );
