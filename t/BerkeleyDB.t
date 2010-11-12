@@ -85,6 +85,28 @@ my $file = $dir->file('listed_email_7.db');
 }
 
 {
+    MyBDB->build(
+        database => $file,
+        file     => file( 't', 'data', 'more_email.txt' ),
+        truncate => 0,
+    );
+
+    my $db = BerkeleyDB::Hash->new( -Filename => $file );
+
+    for my $email (
+        qw( foo@example.com bar@example.com baz@example.com quux@example.com )
+        ) {
+        my $val;
+        $db->db_get( $email, $val );
+
+        ok(
+            $val,
+            "Berkeley DB file contains $email"
+        );
+    }
+}
+
+{
     my $mydb = MyBDB->new( database => $file );
 
     like(

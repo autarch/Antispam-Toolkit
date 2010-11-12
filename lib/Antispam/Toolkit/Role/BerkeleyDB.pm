@@ -5,7 +5,7 @@ use warnings;
 use autodie;
 use namespace::autoclean;
 
-use Antispam::Toolkit::Types qw( File NonEmptyStr DataFile );
+use Antispam::Toolkit::Types qw( Bool File NonEmptyStr DataFile );
 use BerkeleyDB;
 use DateTime;
 
@@ -66,7 +66,7 @@ sub _build_name {
 
 sub build {
     my $class = shift;
-    my ( $file, $database ) = validated_list(
+    my ( $file, $database, $truncate ) = validated_list(
         \@_,
         file => {
             isa    => DataFile,
@@ -75,6 +75,10 @@ sub build {
         database => {
             isa    => File,
             coerce => 1,
+        },
+        truncate => {
+            isa     => Bool,
+            default => 1,
         },
     );
 
@@ -89,19 +93,25 @@ sub build {
         -Env      => $env,
     );
 
-    my $lock = $db->cds_lock();
+    if ($truncate) {
+        my $lock = $db->cds_lock();
 
-    $db->truncate( my $count )
-        and die
-        "Fatal error trying to write to the BerkeleyDB file at $database";
+        $db->truncate( my $count )
+            and die
+            "Fatal error trying to write to the BerkeleyDB file at $database";
 
-    $class->_extract_data_from_file( $file, $db );
+        $class->_extract_data_from_file( $file, $db );
 
-    # This seems to return a true value even if there's not a real error
-    # (maybe in the case where it doesn't actually comptact?)
-    $db->compact();
+        # This seems to return a true value even if there's not a real error
+        # (maybe in the case where it doesn't actually comptact?)
+        $db->compact();
 
-    $lock->cds_unlock();
+        $lock->cds_unlock();
+
+    }
+    else {
+        $class->_extract_data_from_file( $file, $db );
+    }
 
     return;
 }
