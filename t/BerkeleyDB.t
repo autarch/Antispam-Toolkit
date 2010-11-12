@@ -29,8 +29,6 @@ my $file = $dir->file('listed_email_7.db');
 
         return;
     }
-
-    sub check_value { }
 }
 
 {
@@ -75,14 +73,14 @@ my $file = $dir->file('listed_email_7.db');
 
     for my $email (qw( foo@example.com bar@example.com )) {
         ok(
-            $sfsdb->contains_value($email),
-            "Berkeley DB file contains $email (contains_value method)"
+            $sfsdb->match_value($email),
+            "Berkeley DB file contains $email (match_value method)"
         );
     }
 
     ok(
-        !$sfsdb->contains_value('autarch@urth.org'),
-        'Berkeley DB file does not contain autarch@urth.org (contains_value method)'
+        !$sfsdb->match_value('autarch@urth.org'),
+        'Berkeley DB file does not contain autarch@urth.org (match_value method)'
     );
 }
 

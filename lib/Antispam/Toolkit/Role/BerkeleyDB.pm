@@ -115,7 +115,7 @@ sub _extract_data_from_file {
     }
 }
 
-sub contains_value {
+sub match_value {
     my $self = shift;
     my $key  = shift;
 
