@@ -16,7 +16,7 @@ use Test::More 0.88;
 
 like(
     exception { Checker->new()->check_user() },
-    qr{\QYou must pass an email, ip, or username to check_user at t\E.\QUserChecker.t line \E\d+},
+    qr{\QYou must pass an email, ip, or username to check_user at \E\S+\QUserChecker.t line \E\d+},
     'exception when no arguments are passed to check_user()'
 );
 

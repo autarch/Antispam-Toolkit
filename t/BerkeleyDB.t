@@ -88,7 +88,7 @@ my $file = $dir->file('listed_email_7.db');
     MyBDB->build(
         database => $file,
         file     => file( 't', 'data', 'more_email.txt' ),
-        truncate => 0,
+        update   => 1,
     );
 
     my $db = BerkeleyDB::Hash->new( -Filename => $file );
