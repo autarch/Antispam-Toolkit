@@ -277,7 +277,7 @@ default, it expects the value to match a key stored in the database.
 
 =head1 ROLES
 
-This role does the L<Antispam::Toolkit::Database> role. It provides an
+This role does the L<Antispam::Toolkit::Role::Database> role. It provides an
 implementation of C<< $db->match_value() >> method, but you can write your own
 if necessary.
 
