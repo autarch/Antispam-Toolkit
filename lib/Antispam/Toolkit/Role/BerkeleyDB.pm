@@ -9,6 +9,11 @@ use Antispam::Toolkit::Types qw( Bool File NonEmptyStr DataFile );
 use BerkeleyDB;
 use DateTime;
 
+BEGIN {
+    die 'The ' . __PACKAGE__ . ' role requires a BerkeleyDB linked against Berkeley DB 4.4+'
+        unless $BerkeleyDB::db_version >= 4.4;
+}
+
 use Moose::Role;
 use MooseX::Params::Validate qw( validated_list );
 

@@ -7,6 +7,9 @@ use Path::Class qw( dir file );
 
 use Test::More 0.88;
 
+plan skip_all => 'These tests require BerkeleyDB 4.4+'
+    unless $BerkeleyDB::db_version >= 4.4;
+
 my $dir = dir( tempdir( CLEANUP => 1 ) );
 
 my $file = $dir->file('listed_email_7.db');
