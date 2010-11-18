@@ -1,3 +1,11 @@
+0.05    2010-11-18
+
+- The Antispam::Toolkit::Role::BerkeleyDB role now checks to make sure that
+  the BerkeleyDB.pm module is linked against BerkeleyDB 4.4+, and dies if it
+  isn't. The BerkeleyDB tests are skipped in this case as well. Previously,
+  they just died at runtime.
+
+
 0.04    2010-11-18
 
 - There were still a few prereqs missing.
