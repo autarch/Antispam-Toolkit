@@ -27,9 +27,6 @@ around check_content => sub {
         \@_,
         content_type => { isa => NonEmptyStr },
         content      => { isa => NonEmptyStr },
-        email        => { isa => NonEmptyStr, optional => 1 },
-        ip           => { isa => NonEmptyStr, optional => 1 },
-        username     => { isa => NonEmptyStr, optional => 1 },
     );
 
     return
@@ -93,18 +90,6 @@ The MIME type for the piece of content.
 =item * content
 
 The content itself. This must be a non-empty string.
-
-=item * email
-
-An email address associated with the content. This is optional.
-
-=item * ip
-
-An ip address associated with the content. This is optional.
-
-=item * username
-
-A username associated with the content. This is optional.
 
 =back
 
