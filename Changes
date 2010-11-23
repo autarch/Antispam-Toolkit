@@ -1,3 +1,9 @@
+0.06    2010-11-23
+
+- Lots of API changes to the provided roles. Instead of UserChecker, there are
+  now separate roles for checking email, usernames, and ip addresses.
+
+
 0.05    2010-11-18
 
 - The Antispam::Toolkit::Role::BerkeleyDB role now checks to make sure that
