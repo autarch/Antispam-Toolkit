@@ -29,6 +29,7 @@ datetime
 ip
 lookup
 spammer
+uri
 username
 usernames
 wildcard
