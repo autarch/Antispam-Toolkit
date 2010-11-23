@@ -13,8 +13,10 @@ eval "use Pod::Coverage::Moose 0.02";
 plan skip_all => "Pod::Coverage::Moose 0.02 required for testing POD coverage"
     if $@;
 
-my %skip = map { $_ => 1 }
-    qw( Antispam::Toolkit::Types::Internal );
+my %skip = map { $_ => 1 } qw(
+    Antispam::Toolkit::Conflicts
+    Antispam::Toolkit::Types::Internal
+);
 
 my @modules = grep { ! $skip{$_} } all_modules();
 plan tests => scalar @modules;
