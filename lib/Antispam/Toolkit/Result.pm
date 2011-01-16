@@ -83,6 +83,11 @@ Returns the score for the result.
 
 Returns I<a list> of strings. This list may be empty.
 
+=head1 OVERLOADING
+
+This object overloads the boolean operator. If the score is greater than 0, it
+overloads as true, otherwise it overloads as false.
+
 =head1 BUGS
 
 See L<Antispam::Toolkit> for bug reporting details.
