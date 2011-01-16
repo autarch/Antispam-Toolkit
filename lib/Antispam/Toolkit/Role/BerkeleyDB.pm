@@ -96,7 +96,7 @@ sub build {
         -Filename => $database,
         -Flags    => DB_CREATE,
         -Env      => $env,
-    );
+    ) or die "Could not open $database: $! $BerkeleyDB::Error\n";
 
     if ($update) {
         $class->_extract_data_from_file( $file, $db );
