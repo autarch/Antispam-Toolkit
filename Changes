@@ -1,3 +1,8 @@
+0.07    2011-01-16
+
+- The BerkeleyDB role now dies when it cannot create a BerkelyDB object.
+
+
 0.06    2010-11-23
 
 - Lots of API changes to the provided roles. Instead of UserChecker, there are
