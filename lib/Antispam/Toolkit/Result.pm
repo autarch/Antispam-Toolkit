@@ -5,7 +5,7 @@ use warnings;
 
 use Antispam::Toolkit::Types qw( Details NonNegativeNum );
 
-use overload 'bool' => sub { $_[0]->is_spam() };
+use overload 'bool' => sub { $_[0]->score() > 0 };
 
 use Moose;
 use MooseX::StrictConstructor;
