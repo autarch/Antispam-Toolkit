@@ -1,3 +1,9 @@
+0.08    2011-01-16
+
+- Document Antispam::Toolkit::Result's boolean overloading and make it
+  actually work.
+
+
 0.07    2011-01-16
 
 - The BerkeleyDB role now dies when it cannot create a BerkelyDB object.
